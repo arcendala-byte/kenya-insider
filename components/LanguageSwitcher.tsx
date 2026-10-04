@@ -1,0 +1,7 @@
+'use client';
+import { useEffect, useRef, useState } from 'react';
+import { copy, locales, type Locale } from '@/lib/i18n';
+import { useLocale } from '@/components/LocaleProvider';
+const flags: Record<Locale, string> = { en: '🇬🇧', fr: '🇫🇷' };
+const names: Record<Locale, string> = { en: 'English', fr: 'Français' };
+export default function LanguageSwitcher() { const { locale, setLocale } = useLocale(); const [open, setOpen] = useState(false); const ref = useRef<HTMLDivElement>(null); useEffect(() => { const close = (event: MouseEvent) => { if (!ref.current?.contains(event.target as Node)) setOpen(false); }; document.addEventListener('mousedown', close); return () => document.removeEventListener('mousedown', close); }, []); return <div ref={ref} className="relative"><button type="button" onClick={() => setOpen(value => !value)} aria-label={copy[locale].language} aria-expanded={open} className="flex h-8 w-8 items-center justify-center rounded-full text-base transition hover:bg-white/15">{flags[locale]}</button>{open && <div className="absolute right-0 top-10 z-[60] min-w-36 overflow-hidden rounded border border-sandBeige bg-white py-1 text-charcoal shadow-lg">{locales.map(item => <button key={item} type="button" onClick={() => { setLocale(item); setOpen(false); }} className={`flex w-full items-center gap-2 px-3 py-2 text-left text-sm hover:bg-warmIvory ${item === locale ? 'bg-warmIvory font-semibold text-forestGreen' : ''}`}><span>{flags[item]}</span>{names[item]}</button>)}</div>}</div>; }

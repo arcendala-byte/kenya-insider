@@ -1,0 +1,1 @@
+export default function PlaceholderPage() { return <main className="mx-auto max-w-4xl px-5 py-20"><h1 className="font-heading text-4xl text-forestGreen">Kenya Insider</h1><p className="mt-4">This page is being prepared with the same care as the rest of your Kenya journey.</p></main>; }

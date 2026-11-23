@@ -55,7 +55,6 @@ const parseDate = (value: unknown): string | null => {
   }
 
   const date = match[1];
-
   const parsed = new Date(`${date}T00:00:00Z`);
 
   if (Number.isNaN(parsed.getTime())) {
@@ -111,10 +110,7 @@ export async function POST(request: Request) {
 
   // Honeypot protection
   if (body.website) {
-    return NextResponse.json(
-      { ok: true },
-      { status: 201 }
-    );
+    return NextResponse.json({ ok: true }, { status: 201 });
   }
 
   // Basic field validation
@@ -165,7 +161,16 @@ export async function POST(request: Request) {
   }
 
   // Return validation error.
-  if (failReason) {
+  if (
+    failReason ||
+    !name ||
+    !email ||
+    !arrival ||
+    !departure ||
+    !travelers ||
+    !interests ||
+    destinations === null
+  ) {
     const debug = {
       failField: failReason,
       name: !!name,
@@ -179,18 +184,13 @@ export async function POST(request: Request) {
       destinations,
     };
 
-    console.error(
-      '[trip-request 400]',
-      JSON.stringify(debug)
-    );
+    console.error('[trip-request 400]', JSON.stringify(debug));
 
     return NextResponse.json(
       {
         error: 'Please provide valid contact and travel details.',
         field: failReason,
-        ...(process.env.NODE_ENV === 'development'
-          ? { debug }
-          : {}),
+        ...(process.env.NODE_ENV === 'development' ? { debug } : {}),
       },
       { status: 400 }
     );
@@ -210,31 +210,25 @@ export async function POST(request: Request) {
 
   try {
     // Save trip request to Supabase.
-    const { error } = await supabase
-      .from('trip_requests')
-      .insert({
-        name,
-        email: email.toLowerCase(),
-        arrival,
-        departure,
-        travelers,
-        traveling_with: travelingWith,
-        interests,
-        destinations,
-        notes,
-        status: 'new',
-      });
+    const { error } = await supabase.from('trip_requests').insert({
+      name,
+      email: email.toLowerCase(),
+      arrival,
+      departure,
+      travelers,
+      traveling_with: travelingWith,
+      interests,
+      destinations,
+      notes,
+      status: 'new',
+    });
 
     if (error) {
-      logServerError(
-        'trip_request_insert_failed',
-        error
-      );
+      logServerError('trip_request_insert_failed', error);
 
       return NextResponse.json(
         {
-          error:
-            'We could not save your request. Please try again.',
+          error: 'We could not save your request. Please try again.',
         },
         { status: 500 }
       );
@@ -251,20 +245,13 @@ export async function POST(request: Request) {
     });
 
     // Success.
-    return NextResponse.json(
-      { ok: true },
-      { status: 201 }
-    );
+    return NextResponse.json({ ok: true }, { status: 201 });
   } catch (error) {
-    logServerError(
-      'trip_request_unexpected_failure',
-      error
-    );
+    logServerError('trip_request_unexpected_failure', error);
 
     return NextResponse.json(
       {
-        error:
-          'We could not save your request. Please try again.',
+        error: 'We could not save your request. Please try again.',
       },
       { status: 500 }
     );

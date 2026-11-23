@@ -212,7 +212,7 @@ export async function POST(request: Request) {
     // Save trip request to Supabase.
     const { error } = await supabase.from('trip_requests').insert({
       name,
-      email: email.toLowerCase(),
+      email: email!.toLowerCase(),
       arrival,
       departure,
       travelers,

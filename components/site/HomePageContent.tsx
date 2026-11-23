@@ -6,7 +6,7 @@ import Newsletter from '@/components/site/Newsletter';
 import { categories, destinations, experiences, experienceTranslations, destinationTranslations, categoryTranslations } from '@/lib/catalog';
 import { useLocale } from '@/components/LocaleProvider';
 import { copy } from '@/lib/i18n';
-import { formatPrice } from '@/lib/utils/formatPrice';
+import { formatPrice } from '@/lib/utils/formatPrice'; // Update this path to where your formatPrice function lives
 
 const categoryImages = [
   '/images/categories/wildlife/A-herd-of-elephants-in-Amboseli-NP-209601368201897.jpg',

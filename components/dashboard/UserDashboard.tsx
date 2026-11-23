@@ -456,7 +456,7 @@ export default function UserDashboard() {
       <div className="mt-14 flex flex-wrap items-center justify-between gap-4 border-t border-sandBeige pt-8">
         <div>
           <p className="font-semibold text-forestGreen">Ready for your next adventure?</p>
-          <p className="text-sm text-charcoal/60">Browse Kenya's finest experiences and plan your next trip.</p>
+          <p className="text-sm text-charcoal/60">Browse Kenya&apos;s finest experiences and plan your next trip.</p>
         </div>
         <div className="flex gap-3">
           <Link href="/experiences" className="border border-forestGreen px-4 py-2 text-sm font-semibold text-forestGreen hover:bg-forestGreen hover:text-white transition">Browse experiences</Link>
@@ -466,3 +466,4 @@ export default function UserDashboard() {
     </main>
   );
 }
+

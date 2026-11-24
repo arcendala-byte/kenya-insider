@@ -2,7 +2,7 @@
 
 A full-stack travel, culture, and destination discovery platform connecting travelers with curated experiences, hidden gems, and bespoke trip planning across Kenya.
 
-🔗 **Live Demo:** [kenya-insider.vercel.app](https://vercel.app) *(replace with your live Vercel URL)*
+🔗 **Live Demo:** [kenya-insider.vercel.app](https://vercel.app) 
 
 ---
 
